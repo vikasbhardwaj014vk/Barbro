@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>BarBro | Barber Registration</title>
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#23251f;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:100vh;
+
+padding:30px;
+
+}
+
+.signup-box{
+
+width:520px;
+
+background:#111111;
+
+border:2px solid #505050;
+
+border-radius:18px;
+
+padding:40px;
+
+color:white;
+
+}
+
+.logo{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.logo h1{
+
+font-size:40px;
+
+}
+
+.logo p{
+
+color:#bbbbbb;
+
+}
+
+h2{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.input-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+margin-bottom:8px;
+
+}
+
+input,
+textarea{
+
+width:100%;
+
+padding:14px;
+
+border-radius:10px;
+
+border:2px solid #505050;
+
+background:#1d1d1d;
+
+color:white;
+
+font-size:15px;
+
+resize:none;
+
+}
+
+input:focus,
+textarea:focus{
+
+outline:none;
+
+border-color:#c7ff2d;
+
+}
+
+button{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:10px;
+
+background:#c7ff2d;
+
+color:#111;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+background:white;
+
+}
+
+.login{
+
+margin-top:25px;
+
+text-align:center;
+
+}
+
+.login a{
+
+color:#c7ff2d;
+
+text-decoration:none;
+
+}
+
+.login a:hover{
+
+text-decoration:underline;
+
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="signup-box">
+
+<div class="logo">
+
+<h1>✂ BarBro</h1>
+
+<p>Register Your Barber Shop</p>
+
+</div>
+
+<h2>Create Barber Account</h2>
+
+{% if error %}
+<div style="
+    background:#ffdddd;
+    color:#b30000;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:20px;
+    text-align:center;
+">
+    {{ error }}
+</div>
+{% endif %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="input-group">
+
+<label>Username</label>
+
+<input
+type="text"
+name="username"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Email</label>
+
+<input
+type="email"
+name="email"
+id="email"
+placeholder="Enter your email"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Shop Name</label>
+
+<input
+type="text"
+name="shop_name"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Phone Number</label>
+
+<input
+type="tel"
+name="phone"
+id="phone"
+placeholder="Enter your phone number"
+pattern="[0-9]{10}"
+maxlength="10"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Shop Address</label>
+
+<textarea
+name="address"
+rows="4"
+required>
+</textarea>
+
+</div>
+
+<div class="input-group">
+
+<label>Years of Experience</label>
+
+<input
+type="number"
+name="experience"
+min="0"
+required>
+
+</div>
+
+<button type="submit">
+
+Register Shop
+
+</button>
+
+<div class="login">
+
+Already Registered?
+
+<a href="{% url 'barber_login' %}">
+
+Login
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

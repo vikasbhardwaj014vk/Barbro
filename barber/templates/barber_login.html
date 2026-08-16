@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BarBro | Barber Login</title>
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#23251f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.login-box{
+
+    width:430px;
+
+    background:#111111;
+
+    border:2px solid #505050;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    color:white;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.logo h1{
+
+    font-size:40px;
+
+}
+
+.logo p{
+
+    color:#bbbbbb;
+
+}
+
+h2{
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+}
+
+.input-group{
+
+    margin-bottom:20px;
+
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    border:2px solid #505050;
+
+    background:#1d1d1d;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+input:focus{
+
+    border-color:#c7ff2d;
+
+    outline:none;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:white;
+
+}
+
+.error{
+
+    background:#ffdddd;
+
+    color:#b00020;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+}
+
+.signup{
+
+    text-align:center;
+
+    margin-top:25px;
+
+}
+
+.signup a{
+
+    color:#c7ff2d;
+
+    text-decoration:none;
+
+}
+
+.signup a:hover{
+
+    text-decoration:underline;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<div class="logo">
+
+<h1>✂ BarBro</h1>
+
+<p>Barber Portal</p>
+
+</div>
+
+<h2>Barber Login</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
+
+<div class="input-group">
+
+<label>Username</label>
+
+<input
+type="text"
+name="username"
+placeholder="Enter Username"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+</div>
+
+<button type="submit">
+
+Login
+
+</button>
+
+<div class="signup">
+
+Don't have an account?
+
+<a href="{% url 'barber_signup' %}">
+
+Register Shop
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Appointments | BarBro</title>
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#23251f;
+color:white;
+padding:40px;
+
+}
+
+.container{
+
+max-width:1400px;
+margin:auto;
+
+}
+
+/*=========================
+HEADER
+==========================*/
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:45px;
+
+}
+
+.header h1{
+
+font-size:42px;
+
+}
+
+.header p{
+
+color:#bbbbbb;
+margin-top:8px;
+
+}
+
+.home-btn{
+
+text-decoration:none;
+background:#c7ff2d;
+color:#111;
+padding:14px 24px;
+border-radius:10px;
+font-weight:700;
+transition:.3s;
+
+}
+
+.home-btn:hover{
+
+background:white;
+
+}
+
+/*=========================
+GRID
+==========================*/
+
+.appointment-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+gap:30px;
+
+}
+
+/*=========================
+CARD
+==========================*/
+
+.card{
+
+background:#111111;
+border:2px solid #444;
+border-radius:15px;
+padding:25px;
+transition:.4s;
+
+}
+
+.card:hover{
+
+border-color:#c7ff2d;
+transform:translateY(-6px);
+
+}
+
+.card h2{
+
+font-size:28px;
+margin-bottom:8px;
+
+}
+
+.card h4{
+
+color:#c7ff2d;
+margin-bottom:20px;
+
+}
+
+.info{
+
+margin-bottom:10px;
+font-size:15px;
+color:#d5d5d5;
+
+}
+
+.info strong{
+
+color:white;
+
+}
+
+/*=========================
+STATUS
+==========================*/
+
+.status{
+
+display:inline-block;
+padding:8px 18px;
+border-radius:30px;
+font-weight:600;
+margin-top:20px;
+
+}
+
+.pending{
+
+background:#facc15;
+color:#111;
+
+}
+
+.accepted{
+
+background:#22c55e;
+
+}
+
+.rejected{
+
+background:#ef4444;
+
+}
+
+.completed{
+
+background:#3b82f6;
+
+}
+
+.cancelled{
+
+background:#6b7280;
+
+}
+
+/*=========================
+BUTTONS
+==========================*/
+
+.buttons{
+
+display:flex;
+gap:15px;
+margin-top:25px;
+
+}
+
+.btn{
+
+flex:1;
+text-align:center;
+text-decoration:none;
+padding:13px;
+border-radius:8px;
+font-weight:700;
+transition:.3s;
+
+}
+
+.edit{
+
+background:#2563eb;
+color:white;
+
+}
+
+.edit:hover{
+
+background:#1d4ed8;
+
+}
+
+.cancel{
+
+background:#dc2626;
+color:white;
+
+}
+
+.cancel:hover{
+
+background:#b91c1c;
+
+}
+
+/*=========================
+EMPTY
+==========================*/
+
+.empty{
+
+background:#111;
+padding:60px;
+border-radius:15px;
+text-align:center;
+
+}
+
+.empty h2{
+
+font-size:34px;
+margin-bottom:20px;
+
+}
+
+.empty p{
+
+color:#bbb;
+margin-bottom:30px;
+
+}
+
+.empty a{
+
+display:inline-block;
+text-decoration:none;
+background:#c7ff2d;
+color:#111;
+padding:15px 30px;
+border-radius:10px;
+font-weight:700;
+
+}
+
+.empty a:hover{
+
+background:white;
+
+}
+
+/*=========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:768px){
+
+body{
+
+padding:20px;
+
+}
+
+.header{
+
+flex-direction:column;
+gap:20px;
+
+}
+
+.header h1{
+
+font-size:34px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div>
+
+<h1>My Appointments</h1>
+
+<p>
+Manage all your salon bookings
+</p>
+
+</div>
+
+<a href="{% url 'home' %}" class="home-btn">
+
+← Back Home
+
+</a>
+
+</div>
+
+{% if appointments %}
+
+<div class="appointment-grid">
+
+{% for appointment in appointments %}
+
+<div class="card">
+
+<h2>
+
+{{ appointment.barber.shop_name }}
+
+</h2>
+
+<h4>
+
+Barber :
+{{ appointment.barber.user.username }}
+
+</h4>
+
+<div class="info">
+
+<strong>Date :</strong>
+
+{{ appointment.date }}
+
+</div>
+
+<div class="info">
+
+<strong>Time :</strong>
+
+{{ appointment.time }}
+
+</div>
+
+<div class="info">
+
+<strong>Service :</strong>
+
+{{ appointment.service }}
+
+</div>
+
+<div class="info">
+
+<strong>Status :</strong>
+
+<span class="status {{ appointment.status|lower }}">
+
+{{ appointment.status }}
+
+</span>
+
+</div>
+
+{% if appointment.status == "Pending" %}
+
+<div class="buttons">
+
+<a href="{% url 'edit_appointment' appointment.id %}" class="btn edit">
+
+Edit
+
+</a>
+
+<a href="{% url 'cancel_appointment' appointment.id %}" class="btn cancel">
+
+Cancel
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+<h2>No Appointments Yet</h2>
+
+<p>
+
+Book your first haircut with BarBro.
+
+</p>
+
+<a href="{% url 'choose_barber' %}">
+
+Book Appointment
+
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

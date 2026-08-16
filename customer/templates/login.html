@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+    background:#23251f;
+
+    padding:20px;
+
+}
+
+/* ===========================
+        LOGIN CONTAINER
+=========================== */
+
+.login-container{
+
+    width:420px;
+
+    background:#111111;
+
+    border:2px solid #bfff00;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+    animation:fadeUp .8s ease;
+
+}
+
+/* ===========================
+            LOGO
+=========================== */
+
+.logo{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    border-radius:50%;
+
+    background:#c7ff2d;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:38px;
+
+    color:#111;
+
+}
+
+/* ===========================
+            TITLE
+=========================== */
+
+.login-container h2{
+
+    text-align:center;
+
+    color:#ffffff;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#bdbdbd;
+
+    margin-bottom:35px;
+
+    font-size:15px;
+
+}
+
+/* ===========================
+        INPUT GROUP
+=========================== */
+
+.input-group{
+
+    margin-bottom:22px;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    color:#d5d5d5;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:2px solid #404040;
+
+    background:#1f1f1f;
+
+    color:white;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.input-group input::placeholder{
+
+    color:#888;
+
+}
+
+.input-group input:focus{
+
+    border-color:#bfff00;
+
+    box-shadow:0 0 12px rgba(191,255,0,.25);
+
+}
+
+/* ===========================
+        OPTIONS
+=========================== */
+
+.options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    color:#cccccc;
+
+    font-size:14px;
+
+}
+
+.options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.options a{
+
+    text-decoration:none;
+
+    color:#bfff00;
+
+}
+
+.options a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+        BUTTON
+=========================== */
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#bfff00;
+
+    color:#111;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+button:hover{
+
+    background:white;
+
+    transform:translateY(-3px);
+
+}
+
+/* ===========================
+        SIGNUP
+=========================== */
+
+.signup{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#bbbbbb;
+
+    font-size:15px;
+
+}
+
+.signup a{
+
+    color:#bfff00;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.signup a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+        ERROR
+=========================== */
+
+.error-message{
+
+    background:#3b1111;
+
+    border:1px solid #ff5a5a;
+
+    color:#ff9a9a;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    font-size:14px;
+
+}
+
+/* ===========================
+        ANIMATION
+=========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media(max-width:500px){
+
+.login-container{
+
+    width:100%;
+
+    padding:30px 25px;
+
+}
+
+.login-container h2{
+
+    font-size:28px;
+
+}
+
+.subtitle{
+
+    font-size:14px;
+
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="login-container">
+
+    <h2>Login</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label>Username</label>
+            
+            <input type="text" name="username" placeholder="Enter your username"  value="{{ username|default:'' }}" required>
+
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        
+       {% if error %}
+          <div class="error-message">
+          {{ error }}
+          </div>
+       {% endif %}
+
+        <button type="submit">Login</button>
+        
+        <div class="signup">
+            Don't have an account?
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

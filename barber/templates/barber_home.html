@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appointments</title>
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f5f7;
+    margin: 0;
+    padding: 40px 20px;
+    color: #222;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .appointments-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .appointment-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .field span {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .status.pending   { background: #fff3cd; color: #856404; }
+  .status.accepted  { background: #d4edda; color: #155724; }
+  .status.rejected  { background: #f8d7da; color: #721c24; }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-accept {
+    background: #28a745;
+    color: #fff;
+  }
+
+  .btn-accept:hover {
+    background: #218838;
+  }
+
+  .btn-reject {
+    background: #dc3545;
+    color: #fff;
+  }
+
+  .btn-reject:hover {
+    background: #c82333;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    background: #fff;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 700px) {
+    .appointment-card {
+      grid-template-columns: 1fr 1fr;
+    }
+    .actions {
+      grid-column: span 2;
+      justify-content: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Appointments</h1>
+
+  <div class="appointments-container">
+    {% for appointment in appointments %}
+    <div class="appointment-card">
+
+        <div class="field">
+            <label>Customer</label>
+            <span>{{ appointment.customer.username }}</span>
+        </div>
+
+        <div class="field">
+            <label>Date</label>
+            <span>{{ appointment.date }}</span>
+        </div>
+
+        <div class="field">
+            <label>Time</label>
+            <span>{{ appointment.time }}</span>
+        </div>
+
+        <div class="field">
+            <label>Status</label>
+            <span class="status {{ appointment.status|lower }}">
+                {{ appointment.status }}
+            </span>
+        </div>
+
+        <div class="actions">
+            <form method="POST" action="{% url 'accept_appointment' appointment.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-accept">Accept</button>
+            </form>
+
+            <form method="POST" action="{% url 'reject_appointment' appointment.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-reject">Reject</button>
+            </form>
+        </div>
+
+    </div>
+
+{% empty %}
+
+    <div class="empty-state">
+        No appointments found.
+    </div>
+
+{% endfor %}
+
+<hr style="margin:50px 0;">
+
+<h1>Home Haircut Service Requests</h1>
+
+<div class="appointments-container">
+
+{% for request in home_services %}
+
+<div class="appointment-card">
+
+    <div class="field">
+        <label>Customer</label>
+        <span>{{ request.customer.username }}</span>
+    </div>
+
+    <div class="field">
+        <label>Service</label>
+        <span>{{ request.service }}</span>
+    </div>
+
+    <div class="field">
+        <label>Date</label>
+        <span>{{ request.date }}</span>
+    </div>
+
+    <div class="field">
+        <label>Time</label>
+        <span>{{ request.time }}</span>
+    </div>
+
+    <div class="field">
+        <label>Status</label>
+
+        <span class="status {{ request.status|lower }}">
+            {{ request.status }}
+        </span>
+    </div>
+
+    <div class="field">
+        <label>Address</label>
+
+        <span>
+            {{ request.address }}
+        </span>
+    </div>
+
+    <div class="field">
+        <label>Location</label>
+
+        <a target="_blank"
+           href="https://www.google.com/maps?q={{ request.latitude }},{{ request.longitude }}">
+            View on Map
+        </a>
+    </div>
+
+    <div class="field">
+        <label>Notes</label>
+
+        <span>{{ request.notes }}</span>
+    </div>
+
+    <div class="actions">
+
+        <form method="POST"
+              action="{% url 'accept_home_service' request.id %}">
+            {% csrf_token %}
+            <button class="btn btn-accept">
+                Accept
+            </button>
+        </form>
+
+        <form method="POST"
+              action="{% url 'reject_home_service' request.id %}">
+            {% csrf_token %}
+            <button class="btn btn-reject">
+                Reject
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+
+No Home Service Requests.
+
+</div>
+
+{% endfor %}
+
+</div>

@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarBro | Barber Dashboard</title>
+    <link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+    <style>
+
+       /* ==========================================================
+                    GOOGLE FONT
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ==========================================================
+                        BODY
+========================================================== */
+
+body{
+
+    background:#23251f;
+
+    color:#ffffff;
+
+    padding:40px;
+
+}
+
+/* ==========================================================
+                    CONTAINER
+========================================================== */
+
+.container{
+
+    max-width:1500px;
+
+    margin:auto;
+
+}
+
+/* ==========================================================
+                    HEADER
+========================================================== */
+
+header{
+
+    background:#2d2f2a;
+
+    border:2px solid #505050;
+
+    border-radius:18px;
+
+    padding:18px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:45px;
+
+}
+
+/* ==========================================================
+                    LOGO
+========================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.logo-text h2{
+
+    color:#fff;
+
+}
+
+.logo-text span{
+
+    color:#bcbcbc;
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+                    NAVIGATION
+========================================================== */
+
+nav{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    color:#d9d9d9;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-weight:500;
+
+}
+
+nav a:hover,
+nav a.active{
+
+    color:#c7ff2d;
+
+}
+
+/* ==========================================================
+                    PROFILE
+========================================================== */
+
+.profile{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+/* ==========================================================
+                    PAGE TITLE
+========================================================== */
+
+.page-title{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+.page-title h1{
+
+    font-size:50px;
+
+    margin-bottom:12px;
+
+}
+
+.page-title p{
+
+    color:#bcbcbc;
+
+    font-size:18px;
+
+}
+
+/* ==========================================================
+                    SUMMARY CARDS
+========================================================== */
+
+.summary{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+
+    margin-bottom:40px;
+
+}
+
+.summary-card{
+
+    background:#111111;
+
+    border:2px solid #bfff00;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    transition:.35s;
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 35px rgba(191,255,0,.18);
+
+}
+
+.summary-card h3{
+
+    color:#cfcfcf;
+
+    font-size:17px;
+
+    margin-bottom:15px;
+
+}
+
+.summary-card h1{
+
+    color:#bfff00;
+
+    font-size:42px;
+
+    margin-bottom:8px;
+
+}
+
+.summary-card span{
+
+    color:#999;
+
+}
+
+/* ==========================================================
+                    GRID
+========================================================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+}
+
+.left-column,
+.right-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+/* ==========================================================
+                    CARD
+========================================================== */
+
+.dashboard-card{
+
+    background:#111111;
+
+    border:2px solid #505050;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    transition:.35s;
+
+    animation:fadeUp .7s ease;
+
+}
+
+.dashboard-card:hover{
+
+    border-color:#bfff00;
+
+    box-shadow:0 18px 40px rgba(191,255,0,.15);
+
+}
+
+/* ==========================================================
+                    CARD HEADER
+========================================================== */
+
+.card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.card-header h2{
+
+    color:#fff;
+
+}
+
+.card-header a{
+
+    color:#bfff00;
+
+    text-decoration:none;
+
+}
+
+.card-header a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ==========================================================
+                APPOINTMENT ITEM
+========================================================== */
+
+.appointment-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:#2b2b2b;
+
+    border-radius:12px;
+
+    margin-bottom:18px;
+
+    transition:.3s;
+
+}
+
+.appointment-item:hover{
+
+    background:#343434;
+
+}
+
+.appointment-item h3{
+
+    margin-bottom:6px;
+
+}
+
+.appointment-item p{
+
+    color:#bdbdbd;
+
+    margin-bottom:5px;
+
+}
+
+.appointment-item span{
+
+    color:#9d9d9d;
+
+}
+
+/* ==========================================================
+                    STATUS
+========================================================== */
+
+.confirmed{
+
+    background:#22c55e;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.pending{
+
+    background:#f59e0b;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+                HOME REQUESTS
+========================================================== */
+
+.request-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    align-items:center;
+
+    background:#2b2b2b;
+
+    border-radius:12px;
+
+    padding:22px;
+
+    margin-bottom:20px;
+
+}
+
+.request-item h3{
+
+    margin-bottom:10px;
+
+}
+
+.request-item p{
+
+    color:#d1d1d1;
+
+    margin-bottom:8px;
+
+}
+
+.request-item strong{
+
+    color:#bfff00;
+
+    font-size:18px;
+
+}
+
+.request-buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+/* ==========================================================
+                    BUTTONS
+========================================================== */
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    transition:.3s;
+
+    font-weight:600;
+
+}
+
+.accept{
+
+    background:#22c55e;
+
+    color:white;
+
+    padding:12px 24px;
+
+    border-radius:8px;
+
+}
+
+.accept:hover{
+
+    background:#16a34a;
+
+}
+
+.decline{
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:12px 24px;
+
+    border-radius:8px;
+
+}
+
+.decline:hover{
+
+    background:#dc2626;
+
+}
+
+.save-btn{
+
+    width:100%;
+
+    background:#bfff00;
+
+    color:#111;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    margin-top:20px;
+
+}
+
+.save-btn:hover{
+
+    background:#ffffff;
+
+}
+
+/* ==========================================================
+                SALON STATUS
+========================================================== */
+
+.salon-status{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    margin-top:25px;
+
+}
+
+.salon-status label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+}
+
+/* ==========================================================
+                EARNINGS
+========================================================== */
+
+.earning{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #444;
+
+}
+
+.earning:last-child{
+
+    border:none;
+
+}
+
+.earning span{
+
+    color:#bfff00;
+
+    font-weight:bold;
+
+}
+
+/* ==========================================================
+                    REVIEWS
+========================================================== */
+
+.review{
+
+    background:#2b2b2b;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    margin-top:15px;
+
+}
+
+.review p{
+
+    margin-top:12px;
+
+    color:#d4d4d4;
+
+}
+
+/* ==========================================================
+                NOTIFICATIONS
+========================================================== */
+
+.dashboard-card ul{
+
+    list-style:none;
+
+    margin-top:20px;
+
+}
+
+.dashboard-card ul li{
+
+    padding:12px 0;
+
+    border-bottom:1px solid #404040;
+
+    color:#d2d2d2;
+
+}
+
+.dashboard-card ul li:last-child{
+
+    border:none;
+
+}
+
+/* ==========================================================
+                    ANIMATION
+========================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================================
+                    SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#bfff00;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#23251f;
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:1200px){
+
+.dashboard-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:950px){
+
+header{
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+nav{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+.summary{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+body{
+
+    padding:20px;
+
+}
+
+.page-title h1{
+
+    font-size:34px;
+
+}
+
+.summary{
+
+    grid-template-columns:1fr;
+
+}
+
+.request-item{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.request-buttons{
+
+    width:100%;
+
+    flex-direction:row;
+
+}
+
+.request-buttons button{
+
+    flex:1;
+
+}
+
+.appointment-item{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.page-title h1{
+
+    font-size:28px;
+
+}
+
+.logo{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+nav{
+
+    gap:18px;
+
+}
+
+header{
+
+    padding:25px;
+
+}
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                ✂
+            </div>
+
+            <div class="logo-text">
+                <h2>BarBro</h2>
+                <span>Barber Dashboard</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="#">Home</a>
+
+            <a href="#">Appointments</a>
+
+            <a href="#">Home Services</a>
+
+            <a href="#">Customers</a>
+
+            <a href="#">Reviews</a>
+
+            <a href="{% url 'first_page' %}">Role</a>
+
+        </nav>
+
+        <div class="profile">
+
+            👤
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= PAGE TITLE ================= -->
+
+    <section class="page-title">
+
+        
+        <h1>
+         Welcome Back, {{ request.user.username }} 👋
+        </h1>
+
+        <p>
+
+            Manage today's appointments, home service requests and salon availability.
+
+        </p>
+
+    </section>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <section class="summary">
+
+        <div class="summary-card">
+
+            <h3>Today's Appointments</h3>
+
+            <h1>12</h1>
+
+            <span>Booked Today</span>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>Pending Requests</h3>
+
+            <h1>4</h1>
+
+            <span>Need Response</span>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>Home Services</h3>
+
+            <h1>3</h1>
+
+            <span>Today's Visits</span>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h3>Today's Earnings</h3>
+
+            <h1>₹5,200</h1>
+
+            <span>Completed Jobs</span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= MAIN GRID ================= -->
+
+    <section class="dashboard-grid">
+
+
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <div class="left-column">
+
+            <!-- Today's Appointments -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>Today's Appointments</h2>
+
+                    <a href="#">View All</a>
+
+                </div>
+
+                <div class="appointment-list">
+
+
+                    <div class="appointment-item">
+
+                        <div>
+
+                            <h3>Vikas Kumar</h3>
+
+                            <p>Haircut + Beard</p>
+
+                            <span>11:00 AM</span>
+
+                        </div>
+
+                        <div>
+
+                            <span class="confirmed">
+
+                                Confirmed
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="appointment-item">
+
+                        <div>
+
+                            <h3>Rahul Sharma</h3>
+
+                            <p>Hair Spa</p>
+
+                            <span>1:30 PM</span>
+
+                        </div>
+
+                        <div>
+
+                            <span class="pending">
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="appointment-item">
+
+                        <div>
+
+                            <h3>Aman Singh</h3>
+
+                            <p>Fade Cut</p>
+
+                            <span>4:00 PM</span>
+
+                        </div>
+
+                        <div>
+
+                            <span class="confirmed">
+
+                                Confirmed
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+            <!-- Home Service Requests -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>Home Service Requests</h2>
+
+                    <a href="#">View All</a>
+
+                </div>
+
+
+
+
+
+                <div class="request-item">
+
+                    <div>
+
+                        <h3>Deepak Kumar</h3>
+
+                        <p>
+
+                            📍 Mohali Sector 70
+
+                        </p>
+
+                        <p>
+
+                            🕒 2:00 PM
+
+                        </p>
+
+                        <p>
+
+                            💈 Haircut + Beard
+
+                        </p>
+
+                        <strong>
+
+                            ₹450
+
+                        </strong>
+
+                    </div>
+
+                    <div class="request-buttons">
+
+                        <button class="accept">
+
+                            Accept
+
+                        </button>
+
+                        <button class="decline">
+
+                            Decline
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+                <div class="request-item">
+
+                    <div>
+
+                        <h3>Harsh Verma</h3>
+
+                        <p>
+
+                            📍 Chandigarh Sector 35
+
+                        </p>
+
+                        <p>
+
+                            🕒 6:00 PM
+
+                        </p>
+
+                        <p>
+
+                            💈 Premium Haircut
+
+                        </p>
+
+                        <strong>
+
+                            ₹700
+
+                        </strong>
+
+                    </div>
+
+                    <div class="request-buttons">
+
+                        <button class="accept">
+
+                            Accept
+
+                        </button>
+
+                        <button class="decline">
+
+                            Decline
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- ================= RIGHT COLUMN ================= -->
+
+        <div class="right-column">
+
+
+
+
+            <!-- Salon Status -->
+
+            <div class="dashboard-card">
+
+                <h2>
+
+                    Salon Status
+
+                </h2>
+
+                <div class="salon-status">
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="status"
+                            checked
+                        >
+
+                        🟢 Open
+
+                    </label>
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="status"
+                        >
+
+                        🔴 Closed
+
+                    </label>
+
+                </div>
+
+                <button class="save-btn">
+
+                    Save Status
+
+                </button>
+
+            </div>
+
+
+
+
+
+            <!-- Earnings -->
+
+            <div class="dashboard-card">
+
+                <h2>
+
+                    Earnings
+
+                </h2>
+
+                <div class="earning">
+
+                    <h3>
+
+                        Today
+
+                    </h3>
+
+                    <span>
+
+                        ₹5,200
+
+                    </span>
+
+                </div>
+
+                <div class="earning">
+
+                    <h3>
+
+                        This Week
+
+                    </h3>
+
+                    <span>
+
+                        ₹28,500
+
+                    </span>
+
+                </div>
+
+                <div class="earning">
+
+                    <h3>
+
+                        This Month
+
+                    </h3>
+
+                    <span>
+
+                        ₹1,12,000
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <!-- Recent Reviews -->
+
+            <div class="dashboard-card">
+
+                <h2>
+
+                    Recent Reviews
+
+                </h2>
+
+                <div class="review">
+
+                    ⭐⭐⭐⭐⭐
+
+                    <p>
+
+                        "Amazing service and professional barber."
+
+                    </p>
+
+                </div>
+
+                <div class="review">
+
+                    ⭐⭐⭐⭐⭐
+
+                    <p>
+
+                        "Best fade haircut in the city."
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+
+            <!-- Notifications -->
+
+            <div class="dashboard-card">
+
+                <h2>
+
+                    Notifications
+
+                </h2>
+
+                <ul>
+
+                    <li>
+
+                        🔔 New Appointment Booked
+
+                    </li>
+
+                    <li>
+
+                        🔔 Home Service Request Received
+
+                    </li>
+
+                    <li>
+
+                        🔔 Customer Cancelled Appointment
+
+                    </li>
+
+                    <li>
+
+                        🔔 Payment Received
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+    </section>
+
+</div>
+
+</body>
+</html>

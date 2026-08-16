@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    background:#23251f;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:25px;
+
+}
+
+/* ===========================================
+            SIGNUP CONTAINER
+=========================================== */
+
+.signup-container{
+
+    width:460px;
+
+    background:#111111;
+
+    border:2px solid #bfff00;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+    animation:fadeUp .8s ease;
+
+}
+
+/* ===========================================
+                LOGO
+=========================================== */
+
+.logo{
+
+    width:85px;
+
+    height:85px;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    border-radius:50%;
+
+    background:#c7ff2d;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:40px;
+
+    color:#111;
+
+    font-weight:bold;
+
+}
+
+/* ===========================================
+                TITLE
+=========================================== */
+
+h2{
+
+    text-align:center;
+
+    color:#ffffff;
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#bdbdbd;
+
+    margin-bottom:35px;
+
+    font-size:15px;
+
+}
+
+/* ===========================================
+            INPUT GROUP
+=========================================== */
+
+.input-group{
+
+    margin-bottom:22px;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#dddddd;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.input-group input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    background:#1e1e1e;
+
+    border:2px solid #404040;
+
+    border-radius:10px;
+
+    color:white;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.input-group input::placeholder{
+
+    color:#888;
+
+}
+
+.input-group input:focus{
+
+    border-color:#bfff00;
+
+    box-shadow:0 0 12px rgba(191,255,0,.25);
+
+}
+
+/* ===========================================
+            SIGNUP BUTTON
+=========================================== */
+
+.signup-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#bfff00;
+
+    color:#111;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.signup-btn:hover{
+
+    background:#ffffff;
+
+    transform:translateY(-3px);
+
+}
+
+/* ===========================================
+            LOGIN LINK
+=========================================== */
+
+.login-link{
+
+    text-align:center;
+
+    margin-top:25px;
+
+    color:#bbbbbb;
+
+    font-size:15px;
+
+}
+
+.login-link a{
+
+    color:#bfff00;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.login-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================================
+        DJANGO MESSAGES
+=========================================== */
+
+.messages{
+
+    list-style:none;
+
+    margin-bottom:20px;
+
+}
+
+.messages li{
+
+    padding:12px;
+
+    margin-bottom:12px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    text-align:center;
+
+}
+
+/* Success */
+
+.success{
+
+    background:#12391d;
+
+    color:#7ef0a6;
+
+    border:1px solid #1fd36d;
+
+}
+
+/* Error */
+
+.error{
+
+    background:#3b1111;
+
+    color:#ff9a9a;
+
+    border:1px solid #ff5a5a;
+
+}
+
+/* Warning */
+
+.warning{
+
+    background:#4b3d10;
+
+    color:#ffd76b;
+
+    border:1px solid #ffc107;
+
+}
+
+/* Info */
+
+.info{
+
+    background:#11293b;
+
+    color:#9ed8ff;
+
+    border:1px solid #4dabf7;
+
+}
+
+/* ===========================================
+            ANIMATION
+=========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================================
+            RESPONSIVE
+=========================================== */
+
+@media(max-width:550px){
+
+.signup-container{
+
+    width:100%;
+
+    padding:30px 25px;
+
+}
+
+h2{
+
+    font-size:28px;
+
+}
+
+.subtitle{
+
+    font-size:14px;
+
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="signup-container">
+
+    <h2>Create Account</h2>
+    <!-- <p>Sign up to get started</p> -->
+
+    <!-- Django Messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                name="username"
+                id="name"
+                placeholder="Enter your full name"
+                required>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+                required>
+        </div>
+
+        <div class="input-group">
+            <label for="number">Phone Number</label>
+            <input
+                type="tel"
+                name="number"
+                id="number"
+                placeholder="Enter your phone number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Create a password"
+                minlength="8"
+                required>
+        </div>
+
+        <div class="input-group">
+            <label for="password2">Confirm Password</label>
+            <input
+                type="password2"
+                name="password2"
+                id="password2"
+                placeholder="Confirm your password"
+                minlength="8"
+                required>
+        </div>
+
+        <button type="submit" class="signup-btn">
+            Create Account
+        </button>
+
+    </form>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="{% url 'login_view' %}">Login</a>
+    </div>
+
+</div>
+
+</body>
+</html>

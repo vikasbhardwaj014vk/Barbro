@@ -1,0 +1,502 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Shape Analysis | Barbro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #f5af19;
+            --accent2: #f12711;
+            --bg: #0f0f0f;
+            --card: rgba(255,255,255,0.07);
+        }
+        body {
+            background: var(--bg);
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+        .page-title {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .mode-tabs {
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.06);
+            padding: 6px;
+            border-radius: 50px;
+            width: fit-content;
+            margin: 0 auto 28px;
+        }
+        .mode-tabs a {
+            padding: 10px 28px;
+            border-radius: 40px;
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s;
+        }
+        .mode-tabs a.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+        }
+        .video-wrapper, .upload-preview {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+        }
+        #webcam, #output, .upload-preview img {
+            width: 100%;
+            display: block;
+        }
+        #webcam, #output {
+            transform: scaleX(-1);
+        }
+        #output {
+            position: absolute;
+            top: 0; left: 0;
+            pointer-events: none;
+        }
+        .status-badge {
+            position: absolute;
+            top: 14px; left: 14px;
+            background: rgba(0,0,0,0.65);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            z-index: 10;
+            backdrop-filter: blur(6px);
+        }
+        .result-card {
+            background: var(--card);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 28px;
+            margin-top: 28px;
+        }
+        .shape-name {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            background-clip: text;          /* Standard property */
+            -webkit-background-clip: text;  /* Safari/Chrome compatibility */
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+        .rec-item {
+            background: rgba(255,255,255,0.06);
+            border-left: 4px solid var(--accent);
+            padding: 11px 16px;
+            margin-bottom: 8px;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.95rem;
+        }
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+        }
+        .btn-accent:hover { opacity: 0.92; color: #fff; }
+        .btn-ghost {
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            background: transparent;
+            padding: 12px 26px;
+            border-radius: 50px;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .upload-zone {
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 18px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: 0.25s;
+            cursor: pointer;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent);
+            background: rgba(245,175,25,0.05);
+        }
+        .form-select, .form-control {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .form-select:focus, .form-control:focus {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: none;
+        }
+        .form-select option { background: #1a1a1a; }
+    </style>
+</head>
+<body>
+<div class="container py-4 py-md-5">
+    <div class="text-center mb-4">
+        <h1 class="page-title mb-1">Face Shape Analysis</h1>
+        <p class="text-secondary mb-0">Live camera or photo upload • Powered by MediaPipe</p>
+    </div>
+
+    <!-- Mode Switcher -->
+    <div class="mode-tabs">
+        <a href="?mode=live" class="{% if mode != 'upload' %}active{% endif %}">Live Camera</a>
+        <a href="?mode=upload" class="{% if mode == 'upload' %}active{% endif %}">Upload Photo</a>
+    </div>
+
+    {% if mode != 'upload' %}
+    <!-- ═══════════════ LIVE MODE ═══════════════ -->
+    <div id="liveSection">
+        <div class="video-wrapper">
+            <div class="status-badge" id="status">Click Start Camera</div>
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="output"></canvas>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-accent" id="startBtn">Start Camera</button>
+            <button class="btn btn-ghost" id="stopBtn" disabled>Stop</button>
+            <select id="genderSelect" class="form-select w-auto">
+                <option value="unisex">Unisex</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+            </select>
+        </div>
+
+        <div class="result-card" id="liveResultCard" style="display:none;">
+            <div class="text-center mb-3">
+                <div class="shape-name" id="liveShapeName">—</div>
+            </div>
+            <h6 class="text-secondary mb-3">Recommended Styles</h6>
+            <div id="liveRecommendations"></div>
+            <p class="mt-3 text-secondary small mb-0" id="liveTip"></p>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- ═══════════════ UPLOAD MODE ═══════════════ -->
+    <div id="uploadSection">
+        {% if not result %}
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            <div class="upload-zone" id="dropZone">
+                <div class="mb-3" style="font-size:2.5rem;">📷</div>
+                <h5 class="mb-2">Drop your photo here</h5>
+                <p class="text-secondary small mb-3">or click to browse • Front-facing photo works best</p>
+                <input type="file" name="photo" id="photoInput" accept="image/*" class="d-none" required>
+                <button type="button" class="btn btn-accent btn-sm" onclick="document.getElementById('photoInput').click()">
+                    Choose Photo
+                </button>
+            </div>
+
+            <div class="controls mt-4">
+                <select name="gender" class="form-select w-auto">
+                    <option value="unisex">Unisex</option>
+                    <option value="men">Men</option>
+                    <option value="women">Women</option>
+                </select>
+                <button type="submit" class="btn btn-accent" id="analyzeBtn" disabled>Analyze Face Shape</button>
+            </div>
+        </form>
+        {% endif %}
+
+        {% if result %}
+            {% if result.error %}
+                <div class="alert alert-warning text-center">{{ result.error }}</div>
+                <div class="text-center mt-3">
+                    <a href="?mode=upload" class="btn btn-ghost">Try Another Photo</a>
+                </div>
+            {% else %}
+                <div class="upload-preview mb-4">
+                    <img src="{{ uploaded_url }}" alt="Uploaded photo">
+                </div>
+
+                <div class="result-card">
+                    <div class="text-center mb-3">
+                        <div class="shape-name">face shape: {{result.shape }}</div>
+                    </div>
+                    <h6 class="text-secondary mb-3">Recommended Styles</h6>
+                    {% for style in result.recommendations %}
+                        <div class="rec-item">{{ style }}</div>
+                    {% endfor %}
+                    <p class="mt-3 text-secondary small mb-0"><strong>Tip:</strong> {{ result.tip }}</p>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="?mode=upload" class="btn btn-ghost">Analyze Another Photo</a>
+                    <a href="?mode=live" class="btn btn-accent ms-2">Try Live Camera</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+{% if mode != 'upload' %}
+<!-- MediaPipe Live Script -->
+<script type="module">
+import {
+    FaceLandmarker,
+    FilesetResolver,
+    DrawingUtils
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+
+const RECOMMENDATIONS = {
+    "Oval": {
+        men: ["Classic side part", "Textured crop", "Pompadour", "Quiff", "Medium length with soft layers"],
+        women: ["Long layers", "Blunt bob", "Curtain bangs", "Soft waves", "Pixie cut"],
+        tip: "Most versatile shape — almost any style works. Focus on balance."
+    },
+    "Round": {
+        men: ["High fade with volume on top", "Angular fringe / textured quiff", "Side-swept undercut"],
+        women: ["Long layers past the chin", "Side part", "High ponytail / volume at crown", "Angular bob"],
+        tip: "Add vertical length and angles. Avoid chin-length blunt cuts."
+    },
+    "Square": {
+        men: ["Soft textured top", "Side part with movement", "Medium length with texture"],
+        women: ["Soft layers around the jaw", "Side-swept bangs", "Waves at jaw level", "Lob with texture"],
+        tip: "Soften the strong angular jaw with curves and movement."
+    },
+    "Heart": {
+        men: ["Side part", "Textured fringe", "Medium length"],
+        women: ["Chin-length bob", "Side-swept bangs", "Soft waves at the jaw", "Layered lob"],
+        tip: "Add visual weight at the jaw/chin area and soften the forehead."
+    },
+    "Diamond": {
+        men: ["Side part", "Textured crop with soft fringe", "Medium length with width at sides"],
+        women: ["Side-swept bangs", "Chin-length styles", "Soft layers at cheekbones"],
+        tip: "Balance the wide cheekbones — volume at the jaw helps."
+    },
+    "Oblong": {
+        men: ["Side part with horizontal width", "French crop", "Medium length with side volume"],
+        women: ["Chin-length bob or lob", "Side-swept bangs", "Soft waves for width"],
+        tip: "Add horizontal width and break the long vertical line."
+    }
+};
+
+const LM = {
+    forehead_top: 10, chin: 152,
+    left_cheek: 234, right_cheek: 454,
+    left_jaw: 172, right_jaw: 397,
+    left_forehead: 103, right_forehead: 332
+};
+
+let faceLandmarker = null;
+let webcamRunning = false;
+let lastVideoTime = -1;
+let results = undefined;
+let animationId = null;
+const history = [];
+const HISTORY_SIZE = 12;
+
+const video = document.getElementById("webcam");
+const canvas = document.getElementById("output");
+const canvasCtx = canvas.getContext("2d");
+const statusEl = document.getElementById("status");
+const resultCard = document.getElementById("liveResultCard");
+const shapeNameEl = document.getElementById("liveShapeName");
+const recommendationsEl = document.getElementById("liveRecommendations");
+const tipEl = document.getElementById("liveTip");
+const genderSelect = document.getElementById("genderSelect");
+
+async function createFaceLandmarker() {
+    const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+    );
+    faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+            modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+            delegate: "GPU"
+        },
+        runningMode: "VIDEO",
+        numFaces: 1
+    });
+    statusEl.textContent = "Ready – click Start Camera";
+}
+
+function distance(p1, p2) {
+    return Math.hypot(p1.x - p2.x, p1.y - p2.y);
+}
+
+function classifyFaceShape(landmarks) {
+    const faceLength = distance(landmarks[LM.forehead_top], landmarks[LM.chin]);
+    const faceWidth  = distance(landmarks[LM.left_cheek], landmarks[LM.right_cheek]);
+    const jawWidth   = distance(landmarks[LM.left_jaw], landmarks[LM.right_jaw]);
+    const foreheadWidth = distance(landmarks[LM.left_forehead], landmarks[LM.right_forehead]);
+
+    const lw = faceLength / faceWidth;
+    const jc = jawWidth / faceWidth;
+    const fc = foreheadWidth / faceWidth;
+
+    if (lw > 1.55) return "Oblong";
+    if (lw < 1.28 && jc > 0.90) return "Square";
+    if (lw < 1.28) return "Round";
+    if (fc > jc + 0.07) return "Heart";
+    if (jc < 0.80 && fc < 0.85) return "Diamond";
+    return "Oval";
+}
+
+function smoothShape(shape) {
+    history.push(shape);
+    if (history.length > HISTORY_SIZE) history.shift();
+    const counts = {};
+    history.forEach(s => counts[s] = (counts[s] || 0) + 1);
+    return Object.entries(counts).sort((a,b) => b[1] - a[1])[0][0];
+}
+
+function predictWebcam() {
+    if (!webcamRunning || !faceLandmarker) return;
+
+    const now = performance.now();
+    if (video.currentTime !== lastVideoTime) {
+        lastVideoTime = video.currentTime;
+        results = faceLandmarker.detectForVideo(video, now);
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+    canvasCtx.save();
+    canvasCtx.scale(-1, 1);
+    canvasCtx.translate(-canvas.width, 0);
+
+    if (results?.faceLandmarks?.length > 0) {
+        const landmarks = results.faceLandmarks[0];
+        const drawingUtils = new DrawingUtils(canvasCtx);
+
+        drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_TESSELATION, {
+            color: "#C0C0C060", lineWidth: 0.4
+        });
+        drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, {
+            color: "#E8E8E8", lineWidth: 1.5
+        });
+
+        const shape = smoothShape(classifyFaceShape(landmarks));
+        updateLiveUI(shape);
+
+        statusEl.textContent = "Detecting...";
+        statusEl.style.background = "rgba(34,197,94,0.75)";
+    } else {
+        statusEl.textContent = "No face detected";
+        statusEl.style.background = "rgba(239,68,68,0.75)";
+        resultCard.style.display = "none";
+        history.length = 0;
+    }
+
+    canvasCtx.restore();
+    if (webcamRunning) animationId = requestAnimationFrame(predictWebcam);
+}
+
+function updateLiveUI(shape) {
+    const data = RECOMMENDATIONS[shape];
+    if (!data) return;
+
+    const gender = genderSelect.value;
+    let styles = gender === "men" ? data.men :
+                 gender === "women" ? data.women :
+                 [...new Set([...data.men, ...data.women])];
+
+    shapeNameEl.textContent = shape;
+    recommendationsEl.innerHTML = styles.map(s => `<div class="rec-item">${s}</div>`).join("");
+    tipEl.textContent = data.tip;
+    resultCard.style.display = "block";
+}
+
+async function startCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: "user" },
+            audio: false
+        });
+        video.srcObject = stream;
+        video.addEventListener("loadeddata", () => {
+            webcamRunning = true;
+            document.getElementById("startBtn").disabled = true;
+            document.getElementById("stopBtn").disabled = false;
+            statusEl.textContent = "Camera active";
+            predictWebcam();
+        });
+    } catch (err) {
+        statusEl.textContent = "Camera permission denied";
+        console.error(err);
+    }
+}
+
+function stopCamera() {
+    webcamRunning = false;
+    if (animationId) cancelAnimationFrame(animationId);
+    if (video.srcObject) {
+        video.srcObject.getTracks().forEach(t => t.stop());
+        video.srcObject = null;
+    }
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("startBtn").disabled = false;
+    document.getElementById("stopBtn").disabled = true;
+    statusEl.textContent = "Camera stopped";
+    statusEl.style.background = "rgba(0,0,0,0.65)";
+    resultCard.style.display = "none";
+    history.length = 0;
+}
+
+document.getElementById("startBtn").addEventListener("click", startCamera);
+document.getElementById("stopBtn").addEventListener("click", stopCamera);
+createFaceLandmarker();
+</script>
+{% else %}
+<!-- Upload mode helpers -->
+<script>
+const photoInput = document.getElementById("photoInput");
+const dropZone = document.getElementById("dropZone");
+const analyzeBtn = document.getElementById("analyzeBtn");
+
+if (photoInput) {
+    photoInput.addEventListener("change", () => {
+        if (photoInput.files.length) {
+            analyzeBtn.disabled = false;
+            dropZone.querySelector("h5").textContent = photoInput.files[0].name;
+        }
+    });
+
+    dropZone.addEventListener("dragover", e => {
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+    });
+    dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+    dropZone.addEventListener("drop", e => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        if (e.dataTransfer.files.length) {
+            photoInput.files = e.dataTransfer.files;
+            analyzeBtn.disabled = false;
+            dropZone.querySelector("h5").textContent = e.dataTransfer.files[0].name;
+        }
+    });
+    dropZone.addEventListener("click", () => photoInput.click());
+}
+</script>
+{% endif %}
+</body>
+</html> -->

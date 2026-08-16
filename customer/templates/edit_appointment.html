@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Appointment</title>
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+<style>
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#23251f;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:450px;
+    background:#2d2f2a;
+    padding:35px;
+    border-radius:15px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    margin-bottom:18px;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#bfff00;
+    color:#111;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:hover{
+    background:white;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Edit Appointment</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label>Date</label>
+
+<input
+type="date"
+name="date"
+value="{{ appointment.date|date:'Y-m-d' }}"
+required>
+
+<label>Time</label>
+
+<input
+type="time"
+name="time"
+value="{{ appointment.time|time:'H:i' }}"
+required>
+
+<label>Service</label>
+
+<select name="service">
+
+<option value="Hair Cut"
+{% if appointment.service == "Hair Cut" %}selected{% endif %}>
+Hair Cut
+</option>
+
+<option value="Hair + Beard"
+{% if appointment.service == "Hair + Beard" %}selected{% endif %}>
+Hair + Beard
+</option>
+
+<option value="Shaving"
+{% if appointment.service == "Shaving" %}selected{% endif %}>
+Shaving
+</option>
+
+<option value="Hair Spa"
+{% if appointment.service == "Hair Spa" %}selected{% endif %}>
+Hair Spa
+</option>
+
+</select>
+
+<button type="submit">
+Update Appointment
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

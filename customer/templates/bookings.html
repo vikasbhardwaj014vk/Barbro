@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Barber | BarBro</title>
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+<style>
+
+/* ===========================
+        GOOGLE FONT
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    background:#23251f;
+
+    color:white;
+
+    padding:40px;
+
+}
+
+/* ===========================
+        CONTAINER
+=========================== */
+
+.container{
+
+    max-width:1450px;
+
+    margin:auto;
+
+}
+
+/* ===========================
+        HEADER
+=========================== */
+
+header{
+
+    margin-bottom:35px;
+
+    background:#1b1b1b;
+
+    border:1px solid #2f2f2f;
+
+    border-radius:18px;
+
+    padding:18px 35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:sticky;
+
+    top:15px;
+
+    backdrop-filter:blur(18px);
+
+    z-index:1000;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.45);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:#c7ff3d;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#111;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.logo-text h2{
+
+    color:#c7ff3d;
+
+    letter-spacing:2px;
+
+}
+
+.logo-text span{
+
+    color:#999;
+
+    font-size:13px;
+
+}
+
+nav{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.3s;
+
+    font-weight:500;
+
+    position:relative;
+
+}
+
+nav a:hover{
+
+    color:#c7ff3d;
+
+}
+
+nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:#c7ff3d;
+
+    transition:.3s;
+
+}
+
+nav a:hover::after{
+
+    width:100%;
+
+}
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.profile-image{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:50%;
+
+    background:#c7ff3d;
+
+    color:#111;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+}
+
+.profile-info h4{
+
+    font-size:16px;
+
+    color:#fff;
+
+}
+
+.profile-info p{
+
+    color:#9b9b9b;
+
+    font-size:13px;
+
+}
+
+/* ===========================
+        TITLE
+=========================== */
+
+.page-title{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.page-title h1{
+
+    font-size:52px;
+
+    margin-bottom:15px;
+
+}
+
+.page-title p{
+
+    color:#bdbdbd;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+}
+
+/* ===========================
+      BARBER GRID
+=========================== */
+
+.barber-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:35px;
+
+}
+
+/* ===========================
+      CARD
+=========================== */
+
+.barber-card{
+
+    background:#111111;
+
+    border:2px solid #bfff00;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    transition:.4s;
+
+    position:relative;
+
+}
+
+.barber-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 40px rgba(191,255,0,.25);
+
+}
+
+/* ===========================
+      IMAGE
+=========================== */
+
+.barber-card img{
+
+    width:100%;
+
+    height:320px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.4s;
+
+}
+
+.barber-card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+      STATUS
+=========================== */
+
+.status{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    z-index:20;
+
+}
+
+.available{
+
+    background:#22c55e;
+
+    color:white;
+
+}
+
+.busy{
+
+    background:#ef4444;
+
+    color:white;
+
+}
+
+/* ===========================
+      CONTENT
+=========================== */
+
+.barber-content{
+
+    padding:25px;
+
+}
+
+.barber-content h2{
+
+    font-size:27px;
+
+    margin-bottom:6px;
+
+}
+
+.barber-content h4{
+
+    color:#bfff00;
+
+    margin-bottom:18px;
+
+}
+
+.barber-content p{
+
+    color:#cfcfcf;
+
+    margin-bottom:10px;
+
+    font-size:15px;
+
+}
+
+.barber-content h3{
+
+    margin-top:22px;
+
+    margin-bottom:15px;
+
+    font-size:18px;
+
+    color:white;
+
+}
+
+/* ===========================
+      SLOT BUTTONS
+=========================== */
+
+.slots{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.slots button{
+
+    border:none;
+
+    padding:10px 16px;
+
+    background:#2e2e2e;
+
+    color:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.slots button:hover{
+
+    background:#bfff00;
+
+    color:#111;
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================
+      BOOK BUTTON
+=========================== */
+
+.book-btn{
+
+    width:100%;
+
+    display:block;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:#bfff00;
+
+    color:#111;
+
+    padding:15px;
+
+    margin-top:10px;
+
+    border-radius:10px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.book-btn:hover{
+
+    background:white;
+
+}
+
+/* ===========================
+      ANIMATION
+=========================== */
+
+.barber-card{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+      RESPONSIVE
+=========================== */
+
+@media(max-width:1100px){
+
+header{
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+nav{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+body{
+
+    padding:20px;
+
+}
+
+.page-title h1{
+
+    font-size:36px;
+
+}
+
+.page-title p{
+
+    font-size:16px;
+
+}
+
+.barber-card img{
+
+    height:260px;
+
+}
+
+header{
+
+    padding:25px;
+
+}
+
+.logo{
+
+    flex-direction:column;
+
+}
+
+nav{
+
+    gap:18px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.page-title h1{
+
+    font-size:30px;
+
+}
+
+.logo-text h2{
+
+    font-size:22px;
+
+}
+
+.barber-content h2{
+
+    font-size:22px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+
+    <!-- <header>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                💈
+            </div>
+
+            <div class="logo-text">
+
+                <h2>BARBRO</h2>
+
+                {% comment %} <span>Premium Grooming</span> {% endcomment %}
+
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="{% url 'home' %}">Home</a>
+
+            <a href="#">Book Appointment</a>
+
+            <a href="{% url 'my_bookings' %}">My Appointment</a>
+
+            <a href="{% url 'faceshape' %}">Face Scane</a>
+            
+
+            <a href="{% url 'first_page' %}">Role</a>
+
+        </nav>
+
+        <div class="profile">
+
+            👤
+
+        </div>
+
+    </header> -->
+
+    <header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            💈
+        </div>
+
+        <div class="logo-text">
+            <h2>BARBRO</h2>
+            <span>Premium Grooming</span>
+        </div>
+
+    </div>
+
+    <nav>
+
+        <a href="{% url 'home' %}">Home</a>
+
+        <a href="{% url 'choose_barber' %}">Book Appointment</a>
+
+        <a href="{% url 'my_bookings' %}">My Appointment</a>
+
+        <a href="{% url 'faceshape' %}">Face Scan</a>
+
+        <a href="{% url 'first_page' %}">Role</a>
+
+    </nav>
+
+    <div class="profile">
+
+        <div class="profile-image">
+            👤
+        </div>
+
+        <div class="profile-info">
+            <h4>{{ request.user.username }}</h4>
+            <p>Customer</p>
+        </div>
+
+    </div>
+
+</header>
+
+
+
+
+    <!-- ================= PAGE TITLE ================= -->
+
+    <section class="page-title">
+
+        <h1>
+
+            Choose Your Barber
+
+        </h1>
+
+        <p>
+
+            Browse registered barber shops, check today's available slots,
+            or reserve your preferred time for upcoming days.
+
+        </p>
+
+    </section>
+
+
+
+
+    <!-- ================= BARBER GRID ================= -->
+
+    <section class="barber-grid">
+
+{% for barber in barbers %}
+
+<div class="barber-card">
+
+    <!-- <div class="status {% if barber.is_available %}available{% else %}busy{% endif %}">
+
+        {% if barber.is_available %}
+            ● Available
+        {% else %}
+            ● Busy
+        {% endif %}
+
+    </div> -->
+
+    
+
+    <div class="barber-content">
+
+        <h2>{{ barber.shop_name }}</h2>
+
+        <h4>{{ barber.user.get_full_name|default:barber.user.username }}</h4>
+
+        <p>📍 {{ barber.address }}</p>
+
+        <p>📞 {{ barber.phone }}</p>
+
+        <p>💼 {{ barber.experience }} Years Experience</p>
+
+        <form method="POST" action="{% url 'book_appointment' %}">
+
+    {% csrf_token %}
+
+    <input
+        type="hidden"
+        name="barber_id"
+        value="{{ barber.id }}"
+    >
+
+    <label>Select Date</label>
+
+    <input
+        type="date"
+        name="date"
+        required
+    >
+
+    <br><br>
+
+    <label>Select Time</label>
+
+    <input
+        type="time"
+        name="time"
+        required
+    >
+
+    <br><br>
+
+    <label>Service</label>
+
+    <select name="service" required>
+
+        <option value="">Choose Service</option>
+
+        <option value="Hair Cut">Hair Cut</option>
+
+        <option value="Hair + Beard">Hair + Beard</option>
+
+        <option value="Shaving">Shaving</option>
+
+        <option value="Hair Spa">Hair Spa</option>
+
+    </select>
+
+    <br><br>
+
+    <button
+        type="submit"
+        class="book-btn">
+
+        Book Appointment
+
+    </button>
+
+</form>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<h2>No barbers have registered yet.</h2>
+
+{% endfor %}
+
+</section>

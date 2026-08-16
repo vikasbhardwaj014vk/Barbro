@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BarBro | Choose Your Role</title>
+{% load static %}
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+<style>
+
+/*==================================================
+                    GOOGLE FONT
+==================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/*==================================================
+                    BODY
+==================================================*/
+
+body{
+
+    background:#23251f;
+
+    color:white;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+/*==================================================
+                MAIN CONTAINER
+==================================================*/
+
+.container{
+
+    width:100%;
+
+    max-width:1350px;
+
+}
+
+/*==================================================
+                    LOGO
+==================================================*/
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+.logo-icon{
+
+    width:90px;
+
+    height:90px;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    margin-bottom:18px;
+
+}
+
+.logo h1{
+
+    font-size:48px;
+
+    margin-bottom:8px;
+
+}
+
+.logo p{
+
+    color:#bdbdbd;
+
+    font-size:18px;
+
+}
+
+/*==================================================
+                PAGE TITLE
+==================================================*/
+
+.page-title{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.page-title h2{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+}
+
+.page-title p{
+
+    color:#bcbcbc;
+
+    font-size:18px;
+
+    max-width:700px;
+
+    margin:auto;
+
+    line-height:1.8;
+
+}
+
+/*==================================================
+                    ROLE GRID
+==================================================*/
+
+.role-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+
+    gap:35px;
+
+}
+
+/*==================================================
+                    ROLE CARD
+==================================================*/
+
+.role-card{
+
+    background:#111111;
+
+    border:2px solid #505050;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    text-align:center;
+
+    transition:.4s;
+
+}
+
+.role-card:hover{
+
+    transform:translateY(-10px);
+
+    border-color:#c7ff2d;
+
+    box-shadow:0 20px 45px rgba(199,255,45,.18);
+
+}
+
+/*==================================================
+                    ICON
+==================================================*/
+
+.role-icon{
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    font-size:55px;
+
+    margin-bottom:25px;
+
+}
+
+/*==================================================
+                    TITLE
+==================================================*/
+
+.role-card h2{
+
+    font-size:34px;
+
+    margin-bottom:12px;
+
+}
+
+.role-card h4{
+
+    color:#c7ff2d;
+
+    margin-bottom:25px;
+
+    font-weight:500;
+
+}
+
+/*==================================================
+                FEATURES
+==================================================*/
+
+.features{
+
+    text-align:left;
+
+    margin-bottom:35px;
+
+}
+
+.features li{
+
+    list-style:none;
+
+    margin-bottom:18px;
+
+    color:#dddddd;
+
+    font-size:16px;
+
+}
+
+.features li::before{
+
+    content:"✔";
+
+    color:#c7ff2d;
+
+    margin-right:12px;
+
+}
+
+/*==================================================
+                BUTTON
+==================================================*/
+
+.btn{
+
+    display:block;
+
+    width:100%;
+
+    text-decoration:none;
+
+    background:#c7ff2d;
+
+    color:#111;
+
+    padding:16px;
+
+    border-radius:10px;
+
+    font-weight:700;
+
+    font-size:17px;
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    background:white;
+
+    transform:scale(1.03);
+
+}
+
+/*==================================================
+                    FOOTER
+==================================================*/
+
+.footer{
+
+    margin-top:50px;
+
+    text-align:center;
+
+    color:#999;
+
+    font-size:15px;
+
+}
+
+.footer a{
+
+    color:#c7ff2d;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+/*==================================================
+                    ANIMATION
+==================================================*/
+
+.role-card{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/*==================================================
+                RESPONSIVE
+==================================================*/
+
+@media(max-width:900px){
+
+.role-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:768px){
+
+body{
+
+padding:20px;
+
+}
+
+.logo h1{
+
+font-size:36px;
+
+}
+
+.page-title h2{
+
+font-size:32px;
+
+}
+
+.page-title p{
+
+font-size:16px;
+
+}
+
+.role-card{
+
+padding:30px;
+
+}
+
+.role-icon{
+
+width:90px;
+
+height:90px;
+
+font-size:42px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Logo -->
+
+    <div class="logo">
+
+        <div class="logo-icon">
+
+            ✂
+
+        </div>
+
+        <h1>BarBro</h1>
+
+        <p>
+
+            Premium Grooming Platform
+
+        </p>
+
+    </div>
+
+
+    <!-- Heading -->
+
+    <div class="page-title">
+
+        <h2>
+
+            Choose Your Role
+
+        </h2>
+
+        <p>
+
+            Continue as a customer to book salon appointments and home haircut services,
+            or continue as a barber to manage your salon, appointments and customer requests.
+
+        </p>
+
+    </div>
+
+
+    <!-- Role Cards -->
+
+    <div class="role-grid">
+
+        <!-- Customer -->
+
+        <div class="role-card">
+
+            <div class="role-icon">
+
+                👤
+
+            </div>
+
+            <h2>
+
+                Customer
+
+            </h2>
+
+            <h4>
+
+                Book Professional Grooming
+
+            </h4>
+
+            <ul class="features">
+
+                <li>Book Salon Appointments</li>
+
+                <li>Request Home Haircut Service</li>
+
+                <li>AI Hairstyle Recommendation</li>
+
+                <li>Face Shape Detection</li>
+
+                <li>Appointment History</li>
+
+            </ul>
+
+            <a href="{% url 'signup' %}" class="btn">
+
+                Continue as Customer →
+
+            </a>
+
+        </div>
+
+
+        <!-- Barber -->
+
+        <div class="role-card">
+
+            <div class="role-icon">
+
+                ✂
+
+            </div>
+
+            <h2>
+
+                Barber
+
+            </h2>
+
+            <h4>
+
+                Manage Your Salon
+
+            </h4>
+
+            <ul class="features">
+
+                <li>Manage Daily Appointments</li>
+
+                <li>Accept Home Service Requests</li>
+
+                <li>Open / Close Salon</li>
+
+                <li>Track Daily Earnings</li>
+
+                <li>View Customer Reviews</li>
+
+            </ul>
+
+            <a href="{% url 'barber_login' %}" class="btn">
+
+                Continue as Barber →
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+
+        © 2026 <strong>BarBro</strong> | Smart Grooming Platform for Customers & Barbers
+
+    </div>
+
+</div>
+
+</body>
+</html>

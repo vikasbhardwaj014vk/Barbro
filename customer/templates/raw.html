@@ -1,0 +1,688 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<style>/* ===========================================
+   GOOGLE FONT
+=========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ===========================================
+   RESET
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#ece2ca;
+
+    color:#2f2a23;
+
+}
+
+/* ===========================================
+   CONTAINER
+=========================================== */
+
+.container{
+
+    width:90%;
+    max-width:1350px;
+    margin:auto;
+
+}
+
+/* ===========================================
+   HEADER
+=========================================== */
+
+header{
+
+    margin-top:25px;
+
+    background:#f7f1e3;
+
+    border-radius:20px;
+
+    padding:22px 45px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+/* ===========================================
+   LOGO
+=========================================== */
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+}
+
+.logo span{
+
+    color:#8b6934;
+
+}
+
+/* ===========================================
+   NAVBAR
+=========================================== */
+
+nav{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    text-decoration:none;
+
+    color:#4b463e;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#8b6934;
+
+}
+
+/* ===========================================
+   BUTTON
+=========================================== */
+
+.book-btn{
+
+    text-decoration:none;
+
+    background:#8a6b35;
+
+    color:white;
+
+    padding:12px 28px;
+
+    border-radius:30px;
+
+    transition:.3s;
+
+}
+
+.book-btn:hover{
+
+    background:#6d5328;
+
+}
+
+/* ===========================================
+   HERO
+=========================================== */
+
+.hero{
+
+    margin-top:35px;
+
+    background:#f7f1e3;
+
+    border-radius:30px;
+
+    padding:70px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* ===========================================
+   LEFT CONTENT
+=========================================== */
+
+.hero-content{
+
+    width:48%;
+
+}
+
+.hero-content h1{
+
+    font-size:68px;
+
+    line-height:1.15;
+
+    font-family:Georgia,serif;
+
+    margin-bottom:25px;
+
+    color:#2d2923;
+
+}
+
+.hero-content p{
+
+    font-size:18px;
+
+    color:#68625c;
+
+    margin-bottom:35px;
+
+    line-height:1.8;
+
+}
+
+/* ===========================================
+   HERO BUTTON
+=========================================== */
+
+.hero-btn{
+
+    display:inline-block;
+
+    padding:16px 36px;
+
+    background:#7d6023;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:40px;
+
+    transition:.3s;
+
+}
+
+.hero-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:#5f4718;
+
+}
+
+/* ===========================================
+   HERO IMAGE
+=========================================== */
+
+.hero-image{
+
+    width:45%;
+
+    position:relative;
+
+}
+
+.hero-image img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+/* ===========================================
+   FLOATING CARDS
+=========================================== */
+
+.card{
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:12px 18px;
+
+    box-shadow:0 12px 25px rgba(0,0,0,.12);
+
+}
+
+.card h4{
+
+    font-size:14px;
+
+}
+
+.card p{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
+.card-one{
+
+    top:30px;
+
+    right:20px;
+
+}
+
+.card-two{
+
+    bottom:40px;
+
+    left:-20px;
+
+}
+
+.card-three{
+
+    bottom:70px;
+
+    right:-20px;
+
+}
+
+/* ===========================================
+   PARTNERS
+=========================================== */
+
+.partners{
+
+    margin-top:45px;
+
+    background:#f7f1e3;
+
+    border-radius:25px;
+
+    padding:35px 40px;
+
+}
+
+.partners-title{
+
+    font-size:32px;
+
+    font-family:Georgia,serif;
+
+    margin-bottom:25px;
+
+}
+
+.partner-logos{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+
+}
+
+.partner{
+
+    font-size:24px;
+
+    color:#857d73;
+
+    font-weight:600;
+
+}
+
+/* ===========================================
+   ANIMATION
+=========================================== */
+
+.hero{
+
+    animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:992px){
+
+header{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+nav{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+.hero{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.hero-content{
+
+    width:100%;
+
+}
+
+.hero-image{
+
+    width:90%;
+
+    margin-top:40px;
+
+}
+
+.card{
+
+    display:none;
+
+}
+
+.partner-logos{
+
+    justify-content:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.hero{
+
+    padding:40px;
+
+}
+
+.hero-content h1{
+
+    font-size:46px;
+
+}
+
+.hero-content p{
+
+    font-size:16px;
+
+}
+
+.book-btn,
+
+.hero-btn{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.container{
+
+    width:95%;
+
+}
+
+header{
+
+    padding:20px;
+
+}
+
+.hero{
+
+    padding:30px 20px;
+
+}
+
+.hero-content h1{
+
+    font-size:36px;
+
+}
+
+.partner{
+
+    font-size:18px;
+
+}
+
+}</style>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BarBro | Premium Barber</title>
+
+    
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ===========================
+        HEADER
+============================ -->
+
+<header>
+
+    <div class="logo">
+
+        BAR<span>BRO</span>
+
+    </div>
+
+    <nav>
+
+        <a href="#">Home</a>
+
+        <a href="{% url 'book_appointment' %}">
+            Services
+        </a>
+
+        <a href="{% url 'appointment' %}">
+            My Appointment
+        </a>
+
+        <a href="{% url 'faceshape' %}">
+            Face Scan
+        </a>
+
+        <a href="#">
+            Contact
+        </a>
+
+        <a href="#">
+            About
+        </a>
+
+    </nav>
+
+    <a href="{% url 'book_appointment' %}"
+       class="book-btn">
+
+        Book Now
+
+    </a>
+
+</header>
+
+<!-- ===========================
+        HERO
+============================ -->
+
+<section class="hero">
+
+    <!-- LEFT -->
+
+    <div class="hero-content">
+
+        <h1>
+
+            Real men are<br>
+
+            well groomed,<br>
+
+            get haircuts here
+
+        </h1>
+
+        <p>
+
+            Premium haircut, beard styling,
+            hair spa and grooming services by
+            experienced professional barbers.
+
+            Book salon appointments or enjoy
+            barber service at home.
+
+        </p>
+
+        <a href="{% url 'book_appointment' %}"
+
+           class="hero-btn">
+
+            Make Appointment Now
+
+        </a>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="hero-image">
+
+        <img src="https://i.pinimg.com/1200x/91/d6/03/91d6037c183ccc9644cdd59a70857524.jpg" alt="">
+
+      
+
+        
+
+        
+
+        
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     BRAND PARTNERS
+============================ -->
+
+<section class="partners">
+
+    <h2 class="partners-title">
+
+        Our Brand Partners
+
+    </h2>
+
+    <div class="partner-logos">
+
+        <div class="partner">
+
+            Matrix saloon
+
+        </div>
+
+        <div class="partner">
+
+            Beardo
+
+        </div>
+
+        <div class="partner">
+
+            The Man Company
+
+        </div>
+
+        <div class="partner">
+
+            Barber Club
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+</body>
+
+</html>

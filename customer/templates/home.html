@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BarBro - Choose Service</title>
+        {% load static %}
+        
+
+<link rel="icon" type="image/png" href="{% static 'logo.svg' %}">
+
+        <style>
+            /* ===========================================
+            GOOGLE FONT
+=========================================== */
+
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            /* ===========================================
+                BODY
+=========================================== */
+
+            body {
+
+                background: #23251f;
+
+                color: #ffffff;
+
+                padding: 35px;
+
+            }
+
+            /* ===========================================
+              CONTAINER
+=========================================== */
+
+            .container {
+
+                max-width: 1450px;
+
+                margin: auto;
+
+            }
+
+
+            /* ===========================
+        HEADER
+=========================== */
+
+
+
+            /* ===========================================
+Navbar
+=========================================== */
+
+            header {
+
+                margin-bottom: 35px;
+
+                background: #1b1b1b;
+
+                border: 1px solid #2f2f2f;
+
+                border-radius: 18px;
+
+                padding: 18px 35px;
+
+                display: flex;
+
+                justify-content: space-between;
+
+                align-items: center;
+
+                position: sticky;
+
+                top: 15px;
+
+                backdrop-filter: blur(18px);
+
+                z-index: 1000;
+
+                box-shadow: 0 10px 35px rgba(0, 0, 0, .45);
+
+            }
+
+            .logo {
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 15px;
+
+            }
+
+            .logo-icon {
+
+                width: 60px;
+
+                height: 60px;
+
+                border-radius: 50%;
+
+                background: #c7ff3d;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
+                color: #111;
+
+                font-size: 28px;
+
+                font-weight: bold;
+
+            }
+
+            .logo-text h2 {
+
+                color: #c7ff3d;
+
+                letter-spacing: 2px;
+
+            }
+
+            .logo-text span {
+
+                color: #999;
+
+                font-size: 13px;
+
+            }
+
+            nav {
+
+                display: flex;
+
+                gap: 35px;
+
+            }
+
+            nav a {
+
+                text-decoration: none;
+
+                color: white;
+
+                transition: .3s;
+
+                font-weight: 500;
+
+                position: relative;
+
+            }
+
+            nav a:hover {
+
+                color: #c7ff3d;
+
+            }
+
+            nav a::after {
+
+                content: "";
+
+                position: absolute;
+
+                left: 0;
+
+                bottom: -6px;
+
+                width: 0;
+
+                height: 2px;
+
+                background: #c7ff3d;
+
+                transition: .3s;
+
+            }
+
+            nav a:hover::after {
+
+                width: 100%;
+
+            }
+
+            .profile {
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 15px;
+
+            }
+
+            .profile-image {
+
+                width: 52px;
+
+                height: 52px;
+
+                border-radius: 50%;
+
+                background: #c7ff3d;
+
+                color: #111;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
+                font-size: 22px;
+
+            }
+
+            .profile-info h4 {
+
+                font-size: 16px;
+
+                color: #fff;
+
+            }
+
+            .profile-info p {
+
+                color: #9b9b9b;
+
+                font-size: 13px;
+
+            }
+
+
+
+
+
+            /* ===========================================
+              MAIN GRID
+=========================================== */
+
+            .main {
+
+                display: grid;
+
+                grid-template-columns: 2.2fr 1fr;
+
+                gap: 30px;
+
+            }
+
+            /* ===========================================
+             HERO SECTION
+=========================================== */
+
+            .hero {
+
+                position: relative;
+
+                overflow: hidden;
+
+                min-height: 680px;
+
+                padding: 70px;
+
+                border-radius: 25px;
+
+                background: #111111;
+
+                border: 2px solid #bfff00;
+
+            }
+
+            /* ===========================================
+           HERO CONTENT
+=========================================== */
+
+            .hero-content {
+
+                width: 52%;
+
+                position: relative;
+
+                z-index: 5;
+
+            }
+
+            .hero h1 {
+                font-size: 72px;
+                line-height: 1;
+                font-weight: 800;
+                margin-bottom: 25px;
+                color: #ffffff;
+            }
+
+            .hero p {
+                color: #d6d6d6;
+                font-size: 19px;
+                line-height: 1.8;
+            }
+
+            /* ===========================================
+          HERO BUTTON
+=========================================== */
+
+            .hero-btn {
+
+                display: inline-block;
+
+                padding: 18px 42px;
+
+                background: #bfff00;
+
+                color: #111;
+
+                text-decoration: none;
+
+                border-radius: 50px;
+
+                font-weight: 700;
+
+                transition: .35s;
+
+            }
+
+            .hero-btn:hover {
+
+                background: #ffffff;
+
+                transform: translateY(-5px);
+
+            }
+
+            /* ===========================================
+            PRICE TAG
+=========================================== */
+
+            .price-tag {
+
+                position: absolute;
+
+                left: 80px;
+
+                bottom: 80px;
+
+                width: 190px;
+
+                height: 180px;
+
+                border-radius: 50%;
+
+                background: #c7ff2d;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
+                text-align: center;
+
+                color: #111;
+
+                font-weight: 700;
+
+                box-shadow: 0 15px 30px rgba(0, 0, 0, .35);
+
+                z-index: 10;
+
+            }
+
+            .price-tag span {
+
+                display: block;
+
+                font-size: 42px;
+
+            }
+
+            /* ===========================================
+            HERO IMAGE
+=========================================== */
+
+            .hero img {
+
+                position: absolute;
+
+                right: -30px;
+
+                bottom: 0;
+
+                width: 560px;
+
+                transition: .5s;
+
+            }
+
+            .hero:hover img {
+
+                transform: scale(1.03);
+
+            }
+
+            /* ===========================================
+              RIGHT COLUMN
+=========================================== */
+
+            .right-column {
+
+                display: flex;
+
+                flex-direction: column;
+
+                gap: 30px;
+
+            }
+
+            /* ===========================================
+                CARD
+=========================================== */
+
+            .card {
+
+                position: relative;
+
+                overflow: hidden;
+
+                border-radius: 22px;
+
+                padding: 35px;
+
+                transition: .4s;
+
+                color: #ffffff;
+
+            }
+
+            .card:hover {
+
+                transform: translateY(-8px);
+
+            }
+
+            /* ===========================================
+            HOME SERVICE CARD
+=========================================== */
+
+            .home-service {
+
+                min-height: 360px;
+
+                background: #111111;
+
+                border: 2px solid #bfff00;
+
+            }
+
+            .home-service h2 {
+                font-size: 42px;
+            }
+
+            .home-service p {
+                color: #cfcfcf;
+                line-height: 1.7;
+            }
+
+            /* ===========================================
+              OFFER CARD
+=========================================== */
+
+            .offer-card {
+
+                min-height: 295px;
+
+                background: #2d2f2a;
+
+                border: 2px solid #505050;
+
+            }
+
+            .offer-card h2 {
+
+                font-size: 34px;
+
+                margin-bottom: 12px;
+
+            }
+
+            .offer-card p {
+
+                color: #d6d6d6;
+
+                line-height: 1.7;
+
+            }
+
+            /* ===========================================
+            BUTTONS
+=========================================== */
+
+    .service-btn {position: relative;
+    top: 44px;
+    left: -3px;
+    display: inline-block;
+    padding: 15px 38px;
+    background: #bfff00;
+    color: #111;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: .35s;
+        }
+
+            .service-btn:hover {
+
+                background: #ffffff;
+
+                transform: translateY(-4px);
+
+            }
+
+            /* ===========================================
+            CARD IMAGES
+=========================================== */
+
+            .card img {
+
+                position: absolute;
+
+                right: 0;
+
+                bottom: 0;
+
+                width: 240px;
+
+                transition: .4s;
+
+            }
+
+            .card:hover img {
+
+                transform: scale(1.05);
+
+            }
+
+            /* ===========================================
+            FEATURE CARDS
+=========================================== */
+
+            .feature-section {
+
+                margin-top: 40px;
+
+                display: grid;
+
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+                gap: 25px;
+
+            }
+
+            .feature-card {
+
+                background: #111111;
+
+                border: 2px solid #bfff00;
+
+                border-radius: 18px;
+
+                padding: 35px;
+
+                text-align: center;
+
+                transition: .35s;
+
+            }
+
+            .feature-card:hover {
+
+                transform: translateY(-10px);
+
+                box-shadow: 0 15px 35px rgba(191, 255, 0, .20);
+
+            }
+
+            .feature-card .icon {
+
+                width: 80px;
+
+                height: 80px;
+
+                margin: auto;
+
+                margin-bottom: 20px;
+
+                border-radius: 50%;
+
+                background: #c7ff2d;
+
+                color: #111;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
+                font-size: 36px;
+
+                font-weight: bold;
+
+            }
+
+            .feature-card h3 {
+
+                color: #ffffff;
+
+                margin-bottom: 12px;
+
+                font-size: 24px;
+
+            }
+
+            .feature-card p {
+
+                color: #bbbbbb;
+
+                line-height: 1.7;
+
+            }
+
+            /* ===========================================
+            SECTION TITLE
+=========================================== */
+
+            .section-title {
+
+                text-align: center;
+
+                margin: 70px 0 40px;
+
+            }
+
+            .section-title h2 {
+
+                font-size: 44px;
+
+                color: #ffffff;
+
+                margin-bottom: 12px;
+
+            }
+
+            .section-title p {
+
+                color: #bbbbbb;
+
+                font-size: 18px;
+
+            }
+
+            /* ===========================================
+            ANIMATION
+=========================================== */
+
+            .hero,
+            .card,
+            .feature-card {
+
+                animation: fadeUp .8s ease;
+
+            }
+
+            @keyframes fadeUp {
+
+                from {
+
+                    opacity: 0;
+
+                    transform: translateY(40px);
+
+                }
+
+                to {
+
+                    opacity: 1;
+
+                    transform: translateY(0);
+
+                }
+
+            }
+
+            /* ===========================================
+            SCROLLBAR
+=========================================== */
+
+            ::-webkit-scrollbar {
+
+                width: 10px;
+
+            }
+
+            ::-webkit-scrollbar-track {
+
+                background: #23251f;
+
+            }
+
+            ::-webkit-scrollbar-thumb {
+
+                background: #bfff00;
+
+                border-radius: 10px;
+
+            }
+
+            /* ===========================================
+            RESPONSIVE
+=========================================== */
+
+            @media(max-width:1200px) {
+
+                .main {
+
+                    grid-template-columns: 1fr;
+
+                }
+
+                .hero-content {
+
+                    width: 100%;
+
+                }
+
+                .hero img {
+
+                    position: relative;
+
+                    width: 360px;
+
+                    right: auto;
+
+                    margin-top: 40px;
+
+                }
+
+                .right-column {
+
+                    flex-direction: row;
+
+                    flex-wrap: wrap;
+
+                }
+
+                .card {
+
+                    flex: 1 1 350px;
+
+                }
+
+            }
+
+            @media(max-width:900px) {
+
+                .navbar {
+
+                    flex-direction: column;
+
+                    gap: 20px;
+
+                }
+
+                .nav-links {
+
+                    flex-wrap: wrap;
+
+                    justify-content: center;
+
+                    gap: 20px;
+
+                }
+
+                .hero {
+
+                    padding: 45px;
+
+                }
+
+                .hero h1 {
+
+                    font-size: 54px;
+
+                }
+
+                .price-tag {
+
+                    width: 140px;
+
+                    height: 140px;
+
+                    left: 35px;
+
+                    bottom: 35px;
+
+                }
+
+                .price-tag span {
+
+                    font-size: 34px;
+
+                }
+
+                .hero img {
+
+                    width: 300px;
+
+                }
+
+            }
+
+            @media(max-width:768px) {
+
+                body {
+
+                    padding: 18px;
+
+                }
+
+                .hero {
+
+                    min-height: auto;
+
+                }
+
+                .hero-content {
+
+                    width: 100%;
+
+                }
+
+                .hero h1 {
+
+                    font-size: 42px;
+
+                }
+
+                .hero p {
+
+                    font-size: 16px;
+
+                }
+
+                .card {
+
+                    min-height: auto;
+
+                }
+
+                .card img {
+
+                    position: relative;
+
+                    width: 100%;
+
+                    margin-top: 25px;
+
+                }
+
+                .feature-section {
+
+                    grid-template-columns: 1fr;
+
+                }
+
+            }
+
+            @media(max-width:480px) {
+
+                .hero {
+
+                    padding: 30px;
+
+                }
+
+                .hero h1 {
+
+                    font-size: 34px;
+
+                }
+
+                .nav-links {
+
+                    gap: 15px;
+
+                }
+
+                .nav-links a {
+
+                    font-size: 15px;
+
+                }
+
+                .logo h2 {
+
+                    font-size: 22px;
+
+                }
+
+                .profile {
+
+                    width: 45px;
+
+                    height: 45px;
+
+                }
+
+                .hero-btn {
+
+                    width: 100%;
+
+                    text-align: center;
+
+                }
+
+                .service-btn {
+
+                    width: 100%;
+
+                    text-align: center;
+
+                }
+
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <!-- ================= HEADER ================= -->
+
+
+            <!-- ================= NAVBAR ================= -->
+
+            <header>
+
+                <div class="logo">
+
+                    <div class="logo-icon">
+                        💈
+                    </div>
+
+                    <div class="logo-text">
+                        <h2>BARBRO</h2>
+                        <span>Premium Grooming</span>
+                    </div>
+
+                </div>
+
+                <nav>
+
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
+
+                    <a href="{% url 'choose_barber' %}">
+                        Book Appointment
+                    </a>
+
+                    <a href="{% url 'home_service' %}">
+                        Home Service
+                    </a>
+
+                    <a href="{% url 'my_bookings' %}">
+                        My Bookings
+                    </a>
+
+                    <a href="{% url 'faceshape' %}">
+                        Face Scan
+                    </a>
+
+                </nav>
+
+                <div class="profile">
+
+                    <div class="profile-image">
+                        👤
+                    </div>
+
+                    <div class="profile-info">
+                        <h4>{{ request.user.username }}</h4>
+                        <p>Customer</p>
+                    </div>
+
+                </div>
+
+            </header>
+
+            <!-- ================= MAIN ================= -->
+
+            <section class="main">
+
+                <!-- LEFT -->
+
+                <div class="hero">
+
+                    <div class="hero-content">
+
+                        <h1>LOOK<br>SHARP.</h1>
+
+                        <p>
+
+                            Premium haircut, beard styling and grooming
+                            services with professional barbers.
+                            Book an appointment or enjoy grooming
+                            at your doorstep.
+
+                        </p>
+
+                        {% comment %} <a href="{% url 'appointment' %}" class="hero-btn">
+
+                            BOOK APPOINTMENT →
+
+                        </a> {% endcomment %}
+
+                    </div>
+
+                    <!-- Price Circle -->
+
+                    <div class="price-tag">
+
+                        Starting<br>
+
+                        <span>₹199</span>
+
+                    </div>
+
+                    <!-- Replace with barber PNG -->
+
+                    {% comment %} <img src="https://i.imgur.com/O6bQw4H.png"> {% endcomment %}
+
+                </div>
+
+                <!-- RIGHT COLUMN -->
+
+                <div class="right-column">
+
+                    <!-- Home Service -->
+
+                    <div class="card home-service">
+
+                        <h2>HOME SERVICE</h2>
+
+                        <p>
+
+                            Professional barber at your doorstep.
+
+                        </p>
+
+                        <a href="{% url 'book_home_service' %}" class="service-btn">
+
+                            BOOK NOW
+
+                        </a>
+
+                        <!-- Replace image later -->
+
+                        {% comment %} <img src="https://i.imgur.com/J5LVHEL.png"> {% endcomment %}
+
+                    </div>
+
+                    <!-- Offer Card -->
+
+                    <div class="card offer-card">
+
+                        <h2 style="font-size:42px;">
+
+                            WEEKEND OFFERS
+
+                        </h2>
+
+                        <p style="margin-top:15px;">
+
+                            Flat 25% OFF on Haircut + Beard Combo.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </body>
+
+</html>
