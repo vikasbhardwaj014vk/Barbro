@@ -103,7 +103,7 @@ def book_appointment(request):
             service=request.POST["service"]
         )
 
-        return redirect("my_bookings ")   
+        return redirect("my_bookings")   
 
     # If someone visits this URL directly
     return redirect("choose_barber")
