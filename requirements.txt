@@ -8,3 +8,4 @@ opencv-python==4.10.0.84
 mediapipe==0.10.35
 Pillow==10.4.0
 gunicorn
+djangorestframework
