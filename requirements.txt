@@ -10,3 +10,4 @@ Pillow==10.4.0
 gunicorn
 djangorestframework
 djangorestframework-simplejwt
+whitenoise
