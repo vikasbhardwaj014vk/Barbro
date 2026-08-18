@@ -148,6 +148,11 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
