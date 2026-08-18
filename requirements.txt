@@ -11,3 +11,5 @@ gunicorn
 djangorestframework
 djangorestframework-simplejwt
 whitenoise
+dj-database-url
+psycopg
