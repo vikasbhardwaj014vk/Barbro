@@ -9,3 +9,4 @@ mediapipe==0.10.35
 Pillow==10.4.0
 gunicorn
 djangorestframework
+djangorestframework-simplejwt
